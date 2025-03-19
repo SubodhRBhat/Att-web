@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <header>
+        <h1>User Registration</h1>
+    </header>
+    <main>
+        <section id="register">
+            <h2>Register</h2>
+            <input type="text" id="reg-name" placeholder="Enter your name" required>
+            <select id="reg-role" required onchange="toggleFields()">
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="faculty">Faculty</option>
+                <option value="student">Student</option>
+            </select>
+            
+            <div id="student-fields" style="display: none;">
+                <input type="text" id="reg-number" placeholder="Enter your register number" required>
+                <input type="email" id="reg-email" placeholder="Enter your email" required>
+                <input type="text" id="reg-branch" placeholder="Enter your branch" required>
+                <input type="number" id="reg-year" placeholder="Enter your year" required>
+            </div>
+            
+            <div id="faculty-fields" style="display: none;">
+                <input type="text" id="reg-subjects" placeholder="Enter subjects you handle" required>
+            </div>
+            
+            <input type="password" id="reg-password" placeholder="Set your password" required>
+            
+            <button onclick="registerUser()">Register</button>
+        </section>
+        <p id="registration-status"></p>
+        <p>Already have an account? <a href="index.html">Back to Login</a></p>
+    </main>
+
+    <script>
+        function toggleFields() {
+            const role = document.getElementById('reg-role').value;
+            document.getElementById('student-fields').style.display = role === 'student' ? 'block' : 'none';
+            document.getElementById('faculty-fields').style.display = role === 'faculty' ? 'block' : 'none';
+        }
+
+        function registerUser() {
+            const name = document.getElementById("reg-name").value;
+            const role = document.getElementById("reg-role").value;
+            const password = document.getElementById("reg-password").value;
+            
+            if (!name || !role || !password) {
+                alert("Please fill all required fields.");
+                return;
+            }
+            
+            let user = { name, role, password };
+            
+            if (role === "student") {
+                user.regNumber = document.getElementById("reg-number").value;
+                user.email = document.getElementById("reg-email").value;
+                user.branch = document.getElementById("reg-branch").value;
+                user.year = document.getElementById("reg-year").value;
+            } else if (role === "faculty") {
+                user.email = document.getElementById("faculty-email").value;
+                user.subjects = document.getElementById("reg-subjects").value;
+            }
+            
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push(user);
+            localStorage.setItem("users", JSON.stringify(users));
+            
+            alert("Registration successful! You can now log in.");
+            window.location.href = "index.html";
+        }
+    </script>
+    
+    <!-- Firebase connection (commented out) -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script> -->
+    <!-- <script src="auth.js"></script> -->
+</body>
+</html>

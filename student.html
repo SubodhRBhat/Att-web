@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="student.css">
+</head>
+<body onload="checkAuth('student'); loadAttendance()">
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+    <main>
+        <section id="attendance-section">
+            <h2>Your Attendance</h2>
+            <ul id="attendance-list"></ul>
+            <p id="attendance-warning" style="color: red; display: none;"></p>
+            <p id="safe-bunk-info" style="font-weight: bold;"></p>
+        </section>
+        <button onclick="logout()">Logout</button>
+    </main>
+
+    <script>
+        function checkAuth(role) {
+            const user = JSON.parse(localStorage.getItem("loggedInUser"));
+            if (!user || user.role !== role) {
+                alert("Unauthorized access. Redirecting to login.");
+                window.location.href = "index.html";
+            }
+        }
+
+        function loadAttendance() {
+            const studentEmail = localStorage.getItem("username");
+            const attendanceList = document.getElementById("attendance-list");
+            attendanceList.innerHTML = "";
+
+            let attendanceRecords = JSON.parse(localStorage.getItem("attendance")) || [];
+            let filteredRecords = attendanceRecords.filter(record => record.email === studentEmail);
+
+            if (filteredRecords.length === 0) {
+                attendanceList.innerHTML = "<p>No attendance records found.</p>";
+                return;
+            }
+
+            filteredRecords.forEach(record => {
+                const li = document.createElement("li");
+                li.textContent = `Date: ${record.date}, Subject: ${record.subject}`;
+                attendanceList.appendChild(li);
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedInUser");
+            alert("You have been logged out.");
+            window.location.href = "index.html";
+        }
+    </script>
+    
+    <!-- Firebase connection (commented out) -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script> -->
+    <!-- <script src="auth.js"></script> -->
+</body>
+</html>

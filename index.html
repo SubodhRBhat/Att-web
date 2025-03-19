@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <select id="role" required onchange="toggleFields()">
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="faculty">Faculty</option>
+            <option value="student">Student</option>
+        </select>
+        
+        <div id="student-fields" style="display: none;">
+            <input type="text" id="reg-number" placeholder="Enter your register number" required>
+        </div>
+        
+        <div id="faculty-fields" style="display: none;">
+            <input type="email" id="faculty-email" placeholder="Enter your email" required>
+        </div>
+        
+        <input type="password" id="password" placeholder="Enter your password" required>
+        
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="register.html" onclick="goToRegister()">Register here</a></p>
+    </div>
+
+    <script>
+        function toggleFields() {
+            const role = document.getElementById('role').value;
+            document.getElementById('student-fields').style.display = role === 'student' ? 'block' : 'none';
+            document.getElementById('faculty-fields').style.display = role === 'faculty' ? 'block' : 'none';
+        }
+    
+        // Set default admin, student, and faculty
+        document.addEventListener("DOMContentLoaded", function() {
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+    
+            const defaultAdmin = {
+                name: "Admin",
+                email: "admin@gmail.com",
+                role: "admin",
+                password: "admin123"
+            };
+            
+            const defaultStudent = {
+                name: "Default Student",
+                regNumber: "STD123",
+                email: "student@gmail.com",
+                branch: "CSE",
+                year: "1",
+                role: "student",
+                password: "student123"
+            };
+    
+            const defaultFaculty = {
+                name: "Default Faculty",
+                email: "faculty@gmail.com",
+                subjects: "Mathematics",
+                role: "faculty",
+                password: "faculty123"
+            };
+    
+            if (!users.some(user => user.role === "admin")) {
+                users.push(defaultAdmin);
+            }
+    
+            if (!users.some(user => user.role === "student")) {
+                users.push(defaultStudent);
+            }
+            
+            if (!users.some(user => user.role === "faculty")) {
+                users.push(defaultFaculty);
+            }
+    
+            localStorage.setItem("users", JSON.stringify(users));
+        });
+    
+        function login() {
+            const role = document.getElementById('role').value;
+            const registerNumber = document.getElementById('reg-number')?.value;
+            const email = document.getElementById('faculty-email')?.value;
+            const password = document.getElementById('password').value;
+    
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let user;
+    
+            if (role === "student") {
+                user = users.find(u => u.role === "student" && u.regNumber === registerNumber && u.password === password);
+            } else if (role === "faculty" || role === "admin") {
+                user = users.find(u => u.role === role && u.email === email && u.password === password);
+            }
+    
+            if (!user) {
+                alert("Invalid credentials. Please try again.");
+                return;
+            }
+    
+            alert("Login successful!");
+            sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+    
+            const roleRedirects = {
+                "admin": "admin.html",
+                "faculty": "faculty.html",
+                "student": "student.html"
+            };
+    
+            window.location.href = roleRedirects[role] || "index.html";
+        }
+    </script>
+    
+    <!-- Firebase connection (commented out) -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script> -->
+    <!-- <script src="auth.js"></script> -->
+</body>
+</html>

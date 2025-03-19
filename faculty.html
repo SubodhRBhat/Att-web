@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard</title>
+    <link rel="stylesheet" href="faculty.css">
+    <link rel="stylesheet" href="schedule.css">
+</head>
+<body onload="checkAuth('faculty'); loadSubjects(); loadFacultySchedule();">
+    <header>
+        <h1>Faculty Dashboard</h1>
+    </header>
+    <main>
+        <section id="attendance-section">
+            <h2>Mark Attendance</h2>
+            <label for="timetable-upload">Upload Timetable Image:</label>
+            <input type="file" id="timetable-upload" accept="image/*" onchange="processTimetableImage(event)">
+            <label for="subject-select">Select Subject:</label>
+            <select id="subject-select" onchange="loadStudents()">
+                <option value="">Select a subject</option>
+            </select>
+            <ul id="student-list"></ul>
+            <button id="mark-attendance-btn" onclick="submitAttendance()" disabled>Submit Attendance</button>
+        </section>
+        <section id="faculty-schedule-section">
+            <h2>Your Schedule</h2>
+            <ul id="faculty-schedule"></ul>
+        </section>
+        <button onclick="logout()">Logout</button>
+    </main>
+
+    <!script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"><!/script>
+    <!script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"><!/script>
+    <!script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.0.2/tesseract.min.js"><!/script>
+    <!script src="auth.js"><!/script>
+    <!script src="faculty.js"><!/script>
+    <!script src="ocr.js"><!/script>
+</body>
+</html>

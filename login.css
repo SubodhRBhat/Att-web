@@ -1,0 +1,135 @@
+/* File: styles-login.css */
+/* Enhanced version with better structure and responsiveness */
+
+:root {
+    /* Define color variables for easier maintenance */
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --google-color: #db4437;
+    --google-hover: #c1351d;
+    --background-color: #f0f2f5;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --border-color: #ccc;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: clamp(20px, 5vw, 40px); /* Responsive padding */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    width: min(350px, 90vw); /* Responsive width */
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.container:hover {
+    transform: translateY(-2px); /* Subtle hover effect */
+}
+
+h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+input, 
+select, 
+button {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+input:focus, 
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.google-btn {
+    background-color: var(--google-color);
+}
+
+.google-btn:hover {
+    background-color: var(--google-hover);
+}
+
+p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        margin: 0 10px;
+    }
+    
+    input, 
+    select, 
+    button {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .container:hover,
+    button:hover {
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Better form element styling */
+input[type="email"],
+input[type="password"] {
+    background: #fafafa;
+    appearance: none;
+}
+
+/* Animation for button click */
+button:active {
+    transform: scale(0.98);
+}

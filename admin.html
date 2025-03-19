@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="reports.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body onload="checkAdminAccess(); loadPendingUsers(); loadAttendanceReports();">
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+    <main>
+        <section id="pending-requests">
+            <h2>Pending Registrations</h2>
+            <ul id="user-list"></ul>
+        </section>
+        <section id="attendance-reports">
+            <h2>Attendance Reports</h2>
+            <canvas id="attendanceChart"></canvas>
+            <button onclick="exportCSV()">Export as CSV</button>
+        </section>
+        <button onclick="logout()">Logout</button>
+    </main>
+
+    <!script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"><!/script>
+    <!script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"><!/script>
+    <!script src="auth.js"><!/script>
+    <!script src="admin.js"><!/script>
+    <!script src="reports.js"><!/script>
+</body>
+</html>

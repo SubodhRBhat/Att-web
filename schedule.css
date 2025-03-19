@@ -1,0 +1,41 @@
+/* File: styles-schedule.css */
+/* Save Structure: Place this file in the same directory as faculty.html */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    background-color: #6c757d;
+    color: white;
+    padding: 20px;
+    font-size: 24px;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#faculty-schedule {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#faculty-schedule li {
+    background: #d1ecf1;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #0c5460;
+    font-weight: bold;
+}
